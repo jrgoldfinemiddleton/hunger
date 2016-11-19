@@ -58,7 +58,7 @@ In order for it to work, you should also install [Visual C++ Redistributable for
 Unzip the PHP archive into `C:\php` or some directory of your choosing.  Once you've done this, navigate to that folder and make a copy of the file `php.ini-development` called `php.ini` and store it there as well.  You're going to want to open it up and set this line:
 
 ```
-extension_dir:"C:\YOUR\DIRECTORY\HERE"
+extension_dir:"C:\YOUR\DIRECTORY\HERE\ext"
 ```
 
 Also uncomment the lines for any extensions that might be relevant.  We'll figure these out as well go, so this step isn't as important.  The purpose of this file is to set PHP's configuration and as you can see, it's very flexible and modular.
