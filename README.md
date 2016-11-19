@@ -46,7 +46,7 @@ Lastly, you will want to install [VirtualBox](https://www.virtualbox.org/wiki/Do
 Installation Instructions for Windows
 -------------------------------------
 
-Warning: I'm more familiar with macOS and Linux, so you might find a better way to obtain these prerequisites.
+*Warning: I'm more familiar with macOS and Linux, so you might find a better way to obtain these prerequisites.*
 
 I highly recommend installing [GitHub Desktop](https://desktop.github.com).  This will give you the Git Shell, which makes doing Git work a lot easier in Windows.
 
@@ -99,12 +99,13 @@ Now that Symfony is completely installed, you'll want to `cd bin && vagrant up`.
 
 The very last step will be to add an entry to your `hosts` file:
 
-macOS/Mac OS X:
+**macOS/Mac OS X:**
 ```bash
 sudo echo "192.168.10.10 hunger.vagrant" >> /etc/hosts
 ```
 
-Windows:
+**Windows:**
+
 Run Notepad as an administrator and open the file `C:\Windows\System32\Drivers\etc\hosts` and add the following line:
 ```
 192.168.10.10 hunger.vagrant
