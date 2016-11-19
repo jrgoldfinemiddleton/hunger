@@ -46,7 +46,7 @@ In the terminal, run:
 php --ini
 ```
 
-This will show you the location of your php.ini file.  
+This will show you the location of your `php.ini` file.  
 Set your timezone in the `php.ini` configuration file.
 
 ```
