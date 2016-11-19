@@ -29,7 +29,8 @@ Follow the instructions [here](http://brew.sh) to install Homebrew, then at the 
 ```bash
 brew update
 brew tap homebrew/homebrew-php
-brew install php55 composer
+brew install php55
+brew install composer
 ```
 
 Use Homebrew to install any PHP extensions you may need.  Run
@@ -39,6 +40,21 @@ brew search php55
 ```
 
 to see which extensions are available.
+
+In the terminal, run:
+```bash
+php --ini
+```
+
+This will show you the location of your php.ini file.  
+Set your timezone in the `php.ini` configuration file.
+
+```
+date.timezone = "America/Los_Angeles"
+```
+
+Use the correct [valid timezone](https://secure.php.net/manual/en/timezones.php) for you of course.
+
 
 Lastly, you will want to install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html).
 
@@ -55,11 +71,15 @@ Next, clone the repository as normal, and then move on to installing PHP 5.5.
 You can download it [here](http://windows.php.net/downloads/releases/archives/php-5.5.37-Win32-VC11-x64.zip).
 In order for it to work, you should also install [Visual C++ Redistributable for Visual Studio 2012](http://www.microsoft.com/en-us/download/details.aspx?id=30679).
 
-Unzip the PHP archive into `C:\php` or some directory of your choosing.  Once you've done this, navigate to that folder and make a copy of the file `php.ini-development` called `php.ini` and store it there as well.  You're going to want to open it up and set this line:
+Unzip the PHP archive into `C:\php` or some directory of your choosing.  Once you've done this, navigate to that folder and make a copy of the file `php.ini-development` called `php.ini` and store it there as well.  You're going to want to open it up and set these lines:
 
 ```
 extension_dir:"C:\YOUR\DIRECTORY\HERE\ext"
+date.timezone = "America/Los_Angeles"
 ```
+
+Use the correct [valid timezone](https://secure.php.net/manual/en/timezones.php) for you of course.
+
 
 Also uncomment the lines for any extensions that might be relevant.  We'll figure these out as well go, so this step isn't as important.  The purpose of this file is to set PHP's configuration and as you can see, it's very flexible and modular.
 
