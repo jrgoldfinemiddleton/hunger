@@ -1,0 +1,7 @@
+hostname: hunger.vagrant
+ip: 192.168.10.10
+public: /var/www/site
+doc_root: /var/www/site/web
+
+provision_extra:
+  "../app/vagrant/app.sh": ["agent"]
