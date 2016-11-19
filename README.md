@@ -93,9 +93,11 @@ This will install the Symfony and other component files not under version contro
 composer update
 ```
 
-to update your `composer.lock` file or even just delete it and re-run `composer install`.  I won't get into the details, but you can find out more [here](https://getcomposer.org/doc/01-basic-usage.md).
+to update your `composer.lock` file or even just delete it and re-run `composer install`.  I won't get into the details, but you can find out more [here](https://getcomposer.org/doc/01-basic-usage.md).  Now Symfony is completely installed.
 
-Now that Symfony is completely installed, you'll want to `cd bin && vagrant up`.  This will build you an Ubuntu Server 14.04 VM and configure the server.
+*Note:* There is currently a [bug](https://github.com/Varying-Vagrant-Vagrants/VVV/issues/354) in Vagrant for macOS/Mac OS X that prevents `vagrant up` from working correctly.  Please run `sudo rm /opt/vagrant/embedded/bin/curl` if you are running into an error on the next command.
+
+You'll want to `cd bin && vagrant up`.  This will build you an Ubuntu Server 14.04 VM and configure the server.
 
 The very last step will be to add an entry to your `hosts` file:
 
