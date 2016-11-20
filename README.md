@@ -123,7 +123,12 @@ The very last step will be to add an entry to your `hosts` file:
 
 **macOS/Mac OS X:**
 ```bash
-sudo echo "192.168.10.10 hunger.vagrant" >> /etc/hosts
+sudo vi /private/etc/hosts
+```
+
+Add the following entry:
+```
+192.168.10.10 hunger.vagrant
 ```
 
 **Windows:**
