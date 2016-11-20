@@ -138,6 +138,8 @@ Run Notepad as an administrator and open the file `C:\Windows\System32\Drivers\e
 192.168.10.10 hunger.vagrant
 ```
 
+[Clear your local DNS cache.](https://coolestguidesontheplanet.com/clear-the-local-dns-cache-in-osx)
+
 Wanna see something cool?  In your browser, navigate to <http://hunger.vagrant>.
 
 **TODO:** Set up SSL/HTTPS.
