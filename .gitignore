@@ -16,3 +16,4 @@
 /web/bundles/
 .DS_Store
 /bin/.vagrant
+/.idea/
