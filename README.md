@@ -145,3 +145,30 @@ Wanna see something cool?  In your browser, navigate to <http://hunger.vagrant>.
 **TODO:** Set up SSL/HTTPS.
 
 Awesome, you're good to go!  Might want to install [PhpStorm](https://www.jetbrains.com/phpstorm) or some other IDE to do your development, but you are also welcome to use a CLI editor.
+
+Symfony Configuration
+---------------------
+
+The dev environment does not allow remote access to the web server by default.  What this means in practice is that you will not be able to access your routes from your host OS using the VM's web server unless you make a change to the `web/app_dev.php` file.  A workaround (probably not the best) we have used is to comment out the following lines in that file:
+
+```php
+if (isset($_SERVER['HTTP_CLIENT_IP'])
+    || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+    || !(in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']) || php_sapi_name() === 'cli-server')
+) {
+    header('HTTP/1.0 403 Forbidden');
+    exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
+}
+```
+
+Now you should be able to access your routes like so: `http://hunger.vagrant/app_dev.php/list`
+where `list` is a route.
+
+If you want to access your routes without `app_dev.php` in the URL, you should first understand that you'll be viewing production pages.  Run `php bin/console cache:clear --env=prod --no-debug` in the terminal to clear your production cache.  Now you should be able to access `http://hunger.vagrant/list` in your browser.
+
+You can also get around all of this by simply starting your local PHP built-in web server and navigating to `http://localhost:8000/list` instead.
+
+To start the PHP web server: `php bin/console server:start`
+To stop the PHP web server: `php bin/console server:stop`
+
+Don't forget to reload any code changes with `php bin/console cache:clear`.
