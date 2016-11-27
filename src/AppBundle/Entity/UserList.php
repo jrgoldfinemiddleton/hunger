@@ -13,8 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class UserList
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -22,23 +20,18 @@ class UserList
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodItem")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    private $name;
+    private $food_item_id;
 
     /**
-     * @var float
-     *
      * @ORM\Column(name="quantity", type="float")
      */
     private $quantity;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="unit", type="string", length=255)
+     * @ORM\Column(name="unit", type="string", length=50)
      */
     private $unit;
 
@@ -57,30 +50,6 @@ class UserList
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return UserList
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -153,5 +122,29 @@ class UserList
     public function getUserId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Set foodItemId
+     *
+     * @param \AppBundle\Entity\FoodItem $foodItemId
+     *
+     * @return UserList
+     */
+    public function setFoodItemId(\AppBundle\Entity\FoodItem $foodItemId = null)
+    {
+        $this->food_item_id = $foodItemId;
+
+        return $this;
+    }
+
+    /**
+     * Get foodItemId
+     *
+     * @return \AppBundle\Entity\FoodItem
+     */
+    public function getFoodItemId()
+    {
+        return $this->food_item_id;
     }
 }

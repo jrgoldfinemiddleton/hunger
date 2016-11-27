@@ -20,9 +20,10 @@ class FoodBankList
     private $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodItem")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    private $name;
+    private $food_item_id;
 
     /**
      * @ORM\Column(name="quantity", type="float")
@@ -30,7 +31,7 @@ class FoodBankList
     private $quantity;
 
     /**
-     * @ORM\Column(name="unit", type="string", length=255)
+     * @ORM\Column(name="unit", type="string", length=50)
      */
     private $unit;
 
@@ -48,30 +49,6 @@ class FoodBankList
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return FoodBankList
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -144,5 +121,29 @@ class FoodBankList
     public function getUserId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Set foodItemId
+     *
+     * @param \AppBundle\Entity\FoodItem $foodItemId
+     *
+     * @return FoodBankList
+     */
+    public function setFoodItemId(\AppBundle\Entity\FoodItem $foodItemId = null)
+    {
+        $this->food_item_id = $foodItemId;
+
+        return $this;
+    }
+
+    /**
+     * Get foodItemId
+     *
+     * @return \AppBundle\Entity\FoodItem
+     */
+    public function getFoodItemId()
+    {
+        return $this->food_item_id;
     }
 }
