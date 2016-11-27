@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="food_bank")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FoodBankRepository")
  */
 class FoodBank
 {

@@ -9,6 +9,7 @@ use AppBundle\Entity\FoodBank as FoodBank;
 /**
  * @ORM\Entity
  * @ORM\Table(name="`user`")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 class User
 {
