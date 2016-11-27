@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Unit
  *
  * @ORM\Table(name="unit")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Unit")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UnitRepository")
  */
 class Unit
 {
@@ -23,11 +23,6 @@ class Unit
      * @ORM\Column(type="string", length=100, unique=TRUE)
      */
     private $name;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $oz;
 
     /**
      * Get id
@@ -61,29 +56,5 @@ class Unit
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set oz
-     *
-     * @param integer $oz
-     *
-     * @return Unit
-     */
-    public function setOz($oz)
-    {
-        $this->oz = $oz;
-
-        return $this;
-    }
-
-    /**
-     * Get oz
-     *
-     * @return integer
-     */
-    public function getOz()
-    {
-        return $this->oz;
     }
 }
