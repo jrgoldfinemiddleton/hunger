@@ -26,20 +26,21 @@ class FoodBankList
     private $food_item_id;
 
     /**
-     * @ORM\Column(name="quantity", type="float")
+     * @ORM\Column(name="quantity", type="integer")
      */
     private $quantity;
 
     /**
-     * @ORM\Column(name="unit", type="string", length=50)
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Unit")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    private $unit;
+    private $unit_id;
 
     /**
      * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodBank")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
-    private $user_id;
+    private $food_bank_id;
 
     /**
      * Get id
@@ -54,7 +55,7 @@ class FoodBankList
     /**
      * Set quantity
      *
-     * @param float $quantity
+     * @param integer $quantity
      *
      * @return FoodBankList
      */
@@ -68,59 +69,11 @@ class FoodBankList
     /**
      * Get quantity
      *
-     * @return float
+     * @return integer
      */
     public function getQuantity()
     {
         return $this->quantity;
-    }
-
-    /**
-     * Set unit
-     *
-     * @param string $unit
-     *
-     * @return FoodBankList
-     */
-    public function setUnit($unit)
-    {
-        $this->unit = $unit;
-
-        return $this;
-    }
-
-    /**
-     * Get unit
-     *
-     * @return string
-     */
-    public function getUnit()
-    {
-        return $this->unit;
-    }
-
-    /**
-     * Set userId
-     *
-     * @param \AppBundle\Entity\FoodBank $userId
-     *
-     * @return FoodBankList
-     */
-    public function setUserId(\AppBundle\Entity\FoodBank $userId = null)
-    {
-        $this->user_id = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return \AppBundle\Entity\FoodBank
-     */
-    public function getUserId()
-    {
-        return $this->user_id;
     }
 
     /**
@@ -145,5 +98,53 @@ class FoodBankList
     public function getFoodItemId()
     {
         return $this->food_item_id;
+    }
+
+    /**
+     * Set unitId
+     *
+     * @param \AppBundle\Entity\Unit $unitId
+     *
+     * @return FoodBankList
+     */
+    public function setUnitId(\AppBundle\Entity\Unit $unitId = null)
+    {
+        $this->unit_id = $unitId;
+
+        return $this;
+    }
+
+    /**
+     * Get unitId
+     *
+     * @return \AppBundle\Entity\Unit
+     */
+    public function getUnitId()
+    {
+        return $this->unit_id;
+    }
+
+    /**
+     * Set foodBankId
+     *
+     * @param \AppBundle\Entity\FoodBank $foodBankId
+     *
+     * @return FoodBankList
+     */
+    public function setFoodBankId(\AppBundle\Entity\FoodBank $foodBankId = null)
+    {
+        $this->food_bank_id = $foodBankId;
+
+        return $this;
+    }
+
+    /**
+     * Get foodBankId
+     *
+     * @return \AppBundle\Entity\FoodBank
+     */
+    public function getFoodBankId()
+    {
+        return $this->food_bank_id;
     }
 }
