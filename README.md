@@ -198,3 +198,14 @@ sudo service mysql restart
 ```
 
 You can now log out of the VM the same way you'd log out of a remote Linux server.
+
+How to Update the Database Schema
+---------------------------------
+Whenever you add a new entity or pull commits, you should update your local database schema.
+
+```bash
+php bin/console doctrine:schema:update --dump-sql
+php bin/console doctrine:schema:update --force
+```
+
+The first command will show you the SQL commands that will be run with the `--force` option.
