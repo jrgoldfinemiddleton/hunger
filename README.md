@@ -209,3 +209,5 @@ php bin/console doctrine:schema:update --force
 ```
 
 The first command will show you the SQL commands that will be run with the `--force` option.
+
+Any fixtures (pre-defined table rows) can be loaded according to the instructions found [here](https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html).  Note that you will want to use the `--append` flag if you want to preserve the data currently in your tables.
