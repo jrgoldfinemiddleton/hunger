@@ -178,8 +178,8 @@ MySQL Server Configuration
 
 Execute the following commands: `cd bin && vagrant ssh`
 
-Now you're inside the VM.  We need to tell MySQL server to allow access from outside the VM.  Execute the following commands:
-In the `/etc/mysql/my.cnf` file we need to update a few lines.
+Now you're inside the VM.  We need to tell MySQL server to allow access from outside the VM.
+In the `/etc/mysql/my.cnf` file we need to update a few lines.  You'll need to use `sudo` to edit this file.
 
 Find the line with `bind-address` in it.  This should be under the `[mysqld]` section.  Uncomment it and update it to:
 ```
