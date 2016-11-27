@@ -172,3 +172,16 @@ To start the PHP web server: `php bin/console server:start`
 To stop the PHP web server: `php bin/console server:stop`
 
 Don't forget to reload any code changes with `php bin/console cache:clear`.
+
+MySQL Server Configuration
+--------------------------
+
+Execute the following commands: `cd bin && vagrant ssh`
+
+Now you're inside the VM.  We need to tell MySQL server to allow access from outside the VM.  Execute the following commands:
+```bash
+sudo echo "bind-address = 0.0.0.0" >> /etc/mysql/my.cnf
+sudo service mysql restart
+```
+
+You can now log out of the VM the same way you'd log out of a remote Linux server.
