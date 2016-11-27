@@ -5,16 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UserList
+ * FoodBankList
  *
- * @ORM\Table(name="user_list")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserListRepository")
+ * @ORM\Table(name="food_bank_list")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FoodBankListRepository")
  */
-class UserList
+class FoodBankList
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -22,37 +20,30 @@ class UserList
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
-     * @var float
-     *
      * @ORM\Column(name="quantity", type="float")
      */
     private $quantity;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="unit", type="string", length=255)
      */
     private $unit;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodBank")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $user_id;
 
-
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -64,7 +55,7 @@ class UserList
      *
      * @param string $name
      *
-     * @return UserList
+     * @return FoodBankList
      */
     public function setName($name)
     {
@@ -88,7 +79,7 @@ class UserList
      *
      * @param float $quantity
      *
-     * @return UserList
+     * @return FoodBankList
      */
     public function setQuantity($quantity)
     {
@@ -112,7 +103,7 @@ class UserList
      *
      * @param string $unit
      *
-     * @return UserList
+     * @return FoodBankList
      */
     public function setUnit($unit)
     {
@@ -134,11 +125,11 @@ class UserList
     /**
      * Set userId
      *
-     * @param \AppBundle\Entity\User $userId
+     * @param \AppBundle\Entity\FoodBank $userId
      *
-     * @return UserList
+     * @return FoodBankList
      */
-    public function setUserId(\AppBundle\Entity\User $userId = null)
+    public function setUserId(\AppBundle\Entity\FoodBank $userId = null)
     {
         $this->user_id = $userId;
 
@@ -148,7 +139,7 @@ class UserList
     /**
      * Get userId
      *
-     * @return \AppBundle\Entity\User
+     * @return \AppBundle\Entity\FoodBank
      */
     public function getUserId()
     {
