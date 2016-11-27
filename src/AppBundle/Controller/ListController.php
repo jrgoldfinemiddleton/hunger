@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\UserList;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,13 @@ class ListController extends Controller
      */
     public function userListAction()
     {
-        return $this->render('list/index.html.twig');
+        $lists = $this->getDoctrine()
+            ->getRepository('AppBundle:UserList')
+            ->findALL();
+        
+        return $this->render('list/index.html.twig', array(
+            'lists' => $lists
+        ));
     }
     
     /**
