@@ -179,8 +179,21 @@ MySQL Server Configuration
 Execute the following commands: `cd bin && vagrant ssh`
 
 Now you're inside the VM.  We need to tell MySQL server to allow access from outside the VM.  Execute the following commands:
+In the `/etc/mysql/my.cnf` file we need to update a few lines.
+
+Find the line with `bind-address` in it.  This should be under the `[mysqld]` section.  Uncomment it and update it to:
+```
+bind-address = 0.0.0.0
+```
+
+Add the following two lines to the same `[mysqld]` section:
+```
+collation-server     = utf8mb4_general_ci # Replaces utf8_general_ci
+character-set-server = utf8mb4            # Replaces utf8
+```
+
+Then from the command line, restart the MySQL server.
 ```bash
-sudo echo "bind-address = 0.0.0.0" >> /etc/mysql/my.cnf
 sudo service mysql restart
 ```
 
