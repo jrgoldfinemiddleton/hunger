@@ -1,0 +1,36 @@
+{# app/Resources/views/general_user/dashboard.html.twig #}
+{% extends 'general_user.html.twig' %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block body %}
+
+	<div>
+	<h3 class="page-header">Pending Donations</h3>
+		<table class="table table-bordered"> 
+			<thead> 
+				<tr> 
+					<th>Date Added</th> 
+					<th>Donation Item</th> 
+					<th>Donation Amount</th> 
+					<th></th>
+				</tr> 
+			</thead>
+		</table>
+	</div>
+
+	<div>
+	<h3 class="page-header">Previous Donations</h3>
+		<table class="table table-bordered"> 
+			<thead> 
+				<tr> 
+					<th>Donation Completed On</th> 
+					<th>Donation Item</th> 
+					<th>Donation Amount</th> 
+					<th></th>
+				</tr> 
+			</thead>
+		</table>
+	</div>
+
+{% endblock %}

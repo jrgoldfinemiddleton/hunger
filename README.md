@@ -172,3 +172,47 @@ To start the PHP web server: `php bin/console server:start`
 To stop the PHP web server: `php bin/console server:stop`
 
 Don't forget to reload any code changes with `php bin/console cache:clear`.
+
+MySQL Server Configuration
+--------------------------
+
+Execute the following commands: `cd bin && vagrant ssh`
+
+Now you're inside the VM.  We need to tell MySQL server to allow access from outside the VM.
+In the `/etc/mysql/my.cnf` file we need to update a few lines.  You'll need to use `sudo` to edit this file.
+
+Find the line with `bind-address` in it.  This should be under the `[mysqld]` section.  Uncomment it and update it to:
+```
+bind-address = 0.0.0.0
+```
+
+Add the following two lines to the same `[mysqld]` section:
+```
+collation-server     = utf8mb4_general_ci # Replaces utf8_general_ci
+character-set-server = utf8mb4            # Replaces utf8
+```
+
+Then from the command line, restart the MySQL server.
+```bash
+sudo service mysql restart
+```
+
+You can now log out of the VM the same way you'd log out of a remote Linux server.
+
+How to Update the Database Schema
+---------------------------------
+Whenever you add a new entity or pull commits, you should update your local database schema.
+
+```bash
+php bin/console doctrine:schema:update --dump-sql
+php bin/console doctrine:schema:update --force
+```
+
+The first command will show you the SQL commands that will be run with the `--force` option.
+
+Any fixtures (pre-defined table rows) can be loaded according to the instructions found [here](https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html).  Use `bin/console` instead of `app/console` in your command.  Note that you will want to use the `--append` flag if you want to preserve the data currently in your tables.
+
+---------------------------------
+Added the need of registration to access the web app. Please use fake credentials to register and then login with those fake credentials!
+
+Log out at the upper right.

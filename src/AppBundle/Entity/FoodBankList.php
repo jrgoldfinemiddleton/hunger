@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UserList
+ * FoodBankList
  *
- * @ORM\Table(name="user_list")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserListRepository")
+ * @ORM\Table(name="food_bank_list")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FoodBankListRepository")
  */
-class UserList
+class FoodBankList
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -20,10 +20,10 @@ class UserList
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodBank")
+     * @ORM\JoinColumn(name="food_bank_id", referencedColumnName="id")
      */
-    private $user;
+    private $food_bank;
 
     /**
      * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodItem")
@@ -42,6 +42,7 @@ class UserList
      */
     private $quantity;
 
+
     /**
      * Get id
      *
@@ -57,7 +58,7 @@ class UserList
      *
      * @param integer $quantity
      *
-     * @return UserList
+     * @return FoodBankList
      */
     public function setQuantity($quantity)
     {
@@ -77,27 +78,27 @@ class UserList
     }
 
     /**
-     * Set user
+     * Set foodBank
      *
-     * @param \AppBundle\Entity\User $user
+     * @param \AppBundle\Entity\FoodBank $foodBank
      *
-     * @return UserList
+     * @return FoodBankList
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setFoodBank(\AppBundle\Entity\FoodBank $foodBank = null)
     {
-        $this->user = $user;
+        $this->food_bank = $foodBank;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get foodBank
      *
-     * @return \AppBundle\Entity\User
+     * @return \AppBundle\Entity\FoodBank
      */
-    public function getUser()
+    public function getFoodBank()
     {
-        return $this->user;
+        return $this->food_bank;
     }
 
     /**
@@ -105,7 +106,7 @@ class UserList
      *
      * @param \AppBundle\Entity\FoodItem $foodItem
      *
-     * @return UserList
+     * @return FoodBankList
      */
     public function setFoodItem(\AppBundle\Entity\FoodItem $foodItem = null)
     {
@@ -129,7 +130,7 @@ class UserList
      *
      * @param \AppBundle\Entity\Unit $unit
      *
-     * @return UserList
+     * @return FoodBankList
      */
     public function setUnit(\AppBundle\Entity\Unit $unit = null)
     {
