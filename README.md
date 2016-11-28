@@ -214,3 +214,5 @@ Any fixtures (pre-defined table rows) can be loaded according to the instruction
 
 ---------------------------------
 Added the need of registration to access the web app. Please use fake credentials to register and then login with those fake credentials!
+
+Log out at the upper right.
