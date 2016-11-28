@@ -101,6 +101,16 @@ class UserList
     }
 
     /**
+     * Get name
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getName()
+    {
+        return $this->user;
+    }
+
+    /**
      * Set foodItem
      *
      * @param \AppBundle\Entity\FoodItem $foodItem
