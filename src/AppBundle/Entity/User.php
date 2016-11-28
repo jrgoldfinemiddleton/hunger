@@ -48,9 +48,9 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodBank")
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ORM\JoinColumn(name="food_bank_id", referencedColumnName="id")
      */
-    private $food_bank_id;  // for food bank reps, otherwise null
+    private $food_bank;  // for food bank reps, otherwise null
 
 
     public function eraseCredentials()
@@ -129,24 +129,26 @@ class User implements UserInterface
     }
 
     /**
-     * Set foodBankId
+     * Set foodBank
      *
-     * @param integer $foodBankId
+     * @param \AppBundle\Entity\FoodBank $foodBank
      *
      * @return User
      */
-    public function setFoodBankId($foodBankId)
+    public function setFoodBank(\AppBundle\Entity\FoodBank $foodBank = null)
     {
-        $this->food_bank_id = $foodBankId;
+        $this->food_bank = $foodBank;
+
+        return $this;
     }
 
     /**
-     * Get foodBankId
+     * Get foodBank
      *
-     * @return integer
+     * @return \AppBundle\Entity\FoodBank
      */
-    public function getFoodBankId()
+    public function getFoodBank()
     {
-        return $this->food_bank_id;
+        return $this->food_bank;
     }
 }
