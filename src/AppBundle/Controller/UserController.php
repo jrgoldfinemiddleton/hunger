@@ -24,10 +24,11 @@ class UserController extends Controller
 		return $this->render('login/login.html.twig');
 	}
 
-	/**
-	 * @Route("/login/signup", name="user_signup)
-	 */
 
+#	/**
+#	 * @Route("/login/signup", name="user_signup")
+#	 */
+#
 #	public function usersignupAction(Request $request)
 #	{
 #		return $this->render('login/signup.html.twig');
