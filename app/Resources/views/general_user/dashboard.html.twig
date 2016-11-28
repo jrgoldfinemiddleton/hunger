@@ -4,13 +4,33 @@
 {% block title %}User Dashboard{% endblock %}
 
 {% block body %}
-	<h2>Donations</h2>
 
 	<div>
-		<h3>Pending Donations</h3>
+	<h3 class="page-header">Pending Donations</h3>
+		<table class="table table-bordered"> 
+			<thead> 
+				<tr> 
+					<th>Date Added</th> 
+					<th>Donation Item</th> 
+					<th>Donation Amount</th> 
+					<th></th>
+				</tr> 
+			</thead>
+		</table>
 	</div>
 
 	<div>
-		<h3>Previous Donations</h3>
+	<h3 class="page-header">Previous Donations</h3>
+		<table class="table table-bordered"> 
+			<thead> 
+				<tr> 
+					<th>Donation Completed On</th> 
+					<th>Donation Item</th> 
+					<th>Donation Amount</th> 
+					<th></th>
+				</tr> 
+			</thead>
+		</table>
 	</div>
+
 {% endblock %}
