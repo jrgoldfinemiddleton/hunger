@@ -20,28 +20,27 @@ class UserList
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodItem")
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $food_item_id;
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodItem")
+     * @ORM\JoinColumn(name="food_item_id", referencedColumnName="id")
+     */
+    private $food_item;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Unit")
+     * @ORM\JoinColumn(name="unit_id", referencedColumnName="id")
+     */
+    private $unit;
 
     /**
      * @ORM\Column(name="quantity", type="integer")
      */
     private $quantity;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Unit")
-     * @ORM\JoinColumn(referencedColumnName="id")
-     */
-    private $unit_id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\User")
-     * @ORM\JoinColumn(referencedColumnName="id")
-     */
-    private $user_id;
-
 
     /**
      * Get id
@@ -78,74 +77,74 @@ class UserList
     }
 
     /**
-     * Set foodItemId
+     * Set user
      *
-     * @param \AppBundle\Entity\FoodItem $foodItemId
+     * @param \AppBundle\Entity\User $user
      *
      * @return UserList
      */
-    public function setFoodItemId(\AppBundle\Entity\FoodItem $foodItemId = null)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
-        $this->food_item_id = $foodItemId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get foodItemId
-     *
-     * @return \AppBundle\Entity\FoodItem
-     */
-    public function getFoodItemId()
-    {
-        return $this->food_item_id;
-    }
-
-    /**
-     * Set unitId
-     *
-     * @param \AppBundle\Entity\Unit $unitId
-     *
-     * @return UserList
-     */
-    public function setUnitId(\AppBundle\Entity\Unit $unitId = null)
-    {
-        $this->unit_id = $unitId;
-
-        return $this;
-    }
-
-    /**
-     * Get unitId
-     *
-     * @return \AppBundle\Entity\Unit
-     */
-    public function getUnitId()
-    {
-        return $this->unit_id;
-    }
-
-    /**
-     * Set userId
-     *
-     * @param \AppBundle\Entity\User $userId
-     *
-     * @return UserList
-     */
-    public function setUserId(\AppBundle\Entity\User $userId = null)
-    {
-        $this->user_id = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
+     * Get user
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->user_id;
+        return $this->user;
+    }
+
+    /**
+     * Set foodItem
+     *
+     * @param \AppBundle\Entity\FoodItem $foodItem
+     *
+     * @return UserList
+     */
+    public function setFoodItem(\AppBundle\Entity\FoodItem $foodItem = null)
+    {
+        $this->food_item = $foodItem;
+
+        return $this;
+    }
+
+    /**
+     * Get foodItem
+     *
+     * @return \AppBundle\Entity\FoodItem
+     */
+    public function getFoodItem()
+    {
+        return $this->food_item;
+    }
+
+    /**
+     * Set unit
+     *
+     * @param \AppBundle\Entity\Unit $unit
+     *
+     * @return UserList
+     */
+    public function setUnit(\AppBundle\Entity\Unit $unit = null)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return \AppBundle\Entity\Unit
+     */
+    public function getUnit()
+    {
+        return $this->unit;
     }
 }
