@@ -1,24 +1,64 @@
 {# app/Resources/views/general_user.html.twig #}
+
 <!DOCTYPE html>
+<!-- Courtesy: //getbootstrap.com/examples/starter-template/# -->
 <html>
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
         <title>{% block title %}Welcome{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        
+        <!-- Bootstrap core CSS / Courtesy: Boostrap cdn -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        {% block stylesheets %}{% endblock %}
+
+
     </head>
     <body>
-        <div id="sidebar">
-            {% block sidebar %}
-                <ul>
-                    <li><a href="/">Dashboard</a></li>
-                    <li><a href="/list">My List</a></li>
-                </ul>
-            {% endblock %}
-        </div>
-        <div>
-            {% block body %}{% endblock %}
-            {% block javascripts %}{% endblock %}
-        </div>
-    </body>
+        <nav class="navbar navbar-inverse">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Dashboard</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="/general_user">Home</a></li>
+                <li><a href="/list">My List</a></li>
+                <!-- <li><a href="/foodbanksloc">Nearby Food Banks</a> -->
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+
+    {% block body %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    
+                </div>
+            </div>
+        </div><!-- /.container -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    
+                </div>
+            </div>
+        </div><!-- /.container -->
+    {% endblock %}
+    {% block javascripts %}{% endblock %}
+    </body> 
 </html>
