@@ -2,28 +2,30 @@
 
 {% block body %}
 <h3 class="page-header">Donation Wish List</h3>
-<table class="table table-bordered"> 
-	<thead> 
-		<tr> 
-			<th>#</th> 
-			<th>Donation Item</th> 
-			<th>Donation Amount</th> 
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Donation Item</th>
+			<th>Donation Amount</th>
+			<th>Donation Unit</th>
 			<th></th>
-		</tr> 
-	</thead> 
-	<tbody> 
+		</tr>
+	</thead>
+	<tbody>
 		{% for list in lists %}
-		<tr> 
-			<th scope="row">{{list.id}}</th> 
-			<td>{{list.name}}</td> 
-			<td>{{list.quantity}}</td> 
+		<tr>
+			<th scope="row">{{list.id}}</th>
+			<td>{{list.foodItem.name}}</td>
+			<td>{{list.quantity}}</td>
+			<td>{{list.unit.name}}</td>
 			<td>
 				<a href="/list/details/{{list.id}}" class="btn btn-success">View</a>
 				<a href="/list/edit/{{list.id}}" class="btn btn-default">Edit</a>
 				<a href="/list/delete/{{list.id}}" class="btn btn-danger">Delete</a>
 			</td>
-		</tr> 
+		</tr>
 		{% endfor %}
-	</tbody> 
+	</tbody>
 </table>
 {% endblock %}
