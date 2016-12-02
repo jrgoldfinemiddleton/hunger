@@ -27,11 +27,6 @@ class User implements UserInterface
     protected $email;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    protected $FoodBankName;
-
-    /**
      * @ORM\Column(type="string", length=40)
      */
     protected $name;
@@ -106,16 +101,6 @@ class User implements UserInterface
     public function setEmail($email)
     {
         $this->email = $email;
-    }
-
-    public function getFoodBankName()
-    {
-        return $this->FoodBankName;
-    }
-
-    public function setFoodBankName($FoodBankName)
-    {
-        $this->FoodBankName = $FoodBankName;
     }
 
     public function getPassword()
