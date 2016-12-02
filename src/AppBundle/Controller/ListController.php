@@ -46,15 +46,6 @@ class ListController extends DefaultController
         // Create a new UserList Donation Item var
         $list = new UserList;
 
-        // $form = $this->createFormBuilder($list)
-        //     ->add('name', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-        //     ->add('category', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-        //     ->add('description', TextareaType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-        //     ->add('priority', ChoiceType::class, array('choices' => array('Low' => 'Low', 'Normal' => 'Normal', 'High' => 'High'), 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-        //     ->add('due_date', DateTimeType::class, array('attr' => array('class' => 'formcontrol', 'style' => 'margin-bottom:12px')))
-        //     ->add('create', SubmitType::class, array('label' => 'Create Donation Item', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
-        //     ->getForm();
-
         // Make an associative Array of Food item names and Ids to populate a popdown menu
         $repositoryFoodItems = $this->getDoctrine()->getRepository('AppBundle:FoodItem');
         $foodItems = $repositoryFoodItems->findAll();
@@ -76,28 +67,17 @@ class ListController extends DefaultController
             ->add('foodItem', ChoiceType::class, array('choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-            ->add('create', SubmitType::class, array('label' => 'Create Donation Item', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
+            ->add('create', SubmitType::class, array('label' => 'Update Donation Item', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-          // $name = $form['name']->getData();
-          // $category = $form['category']->getData();
-          // $description = $form['description']->getData();
-          // $priority = $form['priority']->getData();
-          // $due_date = $form['due_date']->getData();
 
           //Store the data user typed or selected in the form fields in vars
           $foodItem = $form['foodItem']->getData();
           $quantity = $form['quantity']->getData();
           $unit = $form['unit']->getData();
-
-
-          // $list->setName($name);
-          // $list->setCategory($category);
-          // $list->setDescription($description);
-          // $list->setPriority($priority);
 
           // Set the values that will be stored in the new UserList Donation Item var
           $list->setFoodItem($foodItem);
@@ -109,9 +89,6 @@ class ListController extends DefaultController
           $em->persist($list);
           $em->flush();
 
-          // $this->addFlash(
-          //   'Donation Item Created'
-          // );
           return $this->redirectToRoute('user_list');
         }
 
@@ -205,6 +182,25 @@ class ListController extends DefaultController
         $this->verifyLoggedIn();
 
         return $this->render('list/details.html.twig');
+    }
+
+    /**
+     * @Route("/list/delete/{id}", name="user_delete")
+     */
+    public function userDeleteAction($id)
+    {
+        $this->verifyLoggedIn();
+
+        // Set $list to persist in table
+        $em = $this->getDoctrine()->getManager();
+        $list = $em->getRepository('AppBundle:UserList')->find($id);
+
+        //Delete the item
+        $em->remove($list);
+        $em->flush();
+
+        //Return to the updated user_list page
+        return $this->redirectToRoute('user_list');
     }
 
     /**
