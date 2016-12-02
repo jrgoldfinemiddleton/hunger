@@ -6,13 +6,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\FoodBank as FoodBank;
-
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Entity
  * @UniqueEntity(fields="email", message="This email address is already in use")
  */
-class User implements UserInterface
+class User implements UserInterface, AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Id;
@@ -123,6 +123,18 @@ class User implements UserInterface
         $this->plainPassword = $plainPassword;
     }
 
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    public function __construct()
+    {
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid(null, true));
+    }
+
     public function getSalt()
     {
         return null;
@@ -151,4 +163,52 @@ class User implements UserInterface
     {
         return $this->food_bank;
     }
+
+
+    // Implement AdvancedUserInterface, \Serializable
+
+    public function isAccountNonExpired()
+       {
+           return true;
+       }
+
+       public function isAccountNonLocked()
+       {
+           return true;
+       }
+
+       public function isCredentialsNonExpired()
+       {
+           return true;
+       }
+
+       public function isEnabled()
+       {
+           return $this->isActive;
+       }
+
+       /** @see \Serializable::serialize() */
+       public function serialize()
+       {
+           return serialize(array(
+               $this->id,
+               $this->email,
+               $this->password,
+               // see section on salt below
+               // $this->salt,
+           ));
+       }
+
+       /** @see \Serializable::unserialize() */
+       public function unserialize($serialized)
+       {
+           list (
+               $this->id,
+               $this->email,
+               $this->password,
+               // see section on salt below
+               // $this->salt
+           ) = unserialize($serialized);
+       }
+
 }
