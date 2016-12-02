@@ -1,5 +1,8 @@
 {% extends 'listBase.html.twig' %}
 
 {% block body %}
-LIST EDIT
+<h3 class="page-header">Edit Your Donation item</h3>
+{{form_start(form)}}
+{{form_widget(form)}}
+{{form_end(form)}}
 {% endblock %}

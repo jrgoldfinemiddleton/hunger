@@ -120,7 +120,74 @@ class ListController extends DefaultController
     {
         $this->verifyLoggedIn();
 
-        return $this->render('list/edit.html.twig');
+        // Get chosen UserList Donation Item var
+        $list = $this->getDoctrine()
+            ->getRepository('AppBundle:List')
+            ->find($id);
+
+        // Set the values that will be stored in the new UserList Donation Item var
+        $list->setFoodItem($list->getFoodItem());
+        $list->setQuantity($list->getQuantity());
+        $list->setUnit($list->getUnit());
+
+        // Make an associative Array of Food item names and Ids to populate a popdown menu
+        $repositoryFoodItems = $this->getDoctrine()->getRepository('AppBundle:FoodItem');
+        $foodItems = $repositoryFoodItems->findAll();
+        $foodItemsNameAndId;
+        foreach ($foodItems as $element) {
+          $foodItemsNameAndId[$element->getName()] = $element;
+        }
+
+        // Make an associative Array of Unit names and Ids to populate a popdown menu
+        $repositoryUnitItems = $this->getDoctrine()->getRepository('AppBundle:Unit');
+        $unitItems = $repositoryUnitItems->findAll();
+        $unitItemsNameAndId;
+        foreach ($unitItems as $element) {
+          $unitItemsNameAndId[$element->getName()] = $element;
+        }
+
+        // Create a new form of fields stored in $form var
+        $form = $this->createFormBuilder($list)
+            ->add('foodItem', ChoiceType::class, array('choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('create', SubmitType::class, array('label' => 'Create Donation Item', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+          //Store the data user typed or selected in the form fields in vars
+          $foodItem = $form['foodItem']->getData();
+          $quantity = $form['quantity']->getData();
+          $unit = $form['unit']->getData();
+
+
+          // Set $list to persist in table
+          $em = $this->getDoctrine()->getManager();
+          $list = $em->getRepository('AppBundle:List')->find($id);
+
+          // Set the values that will be stored in the new UserList Donation Item var
+          $list->setFoodItem($foodItem);
+          $list->setQuantity($quantity);
+          $list->setUnit($unit);
+
+
+
+          $em->flush();
+
+          // $this->addFlash(
+          //   'Donation Item Created'
+          // );
+          return $this->redirectToRoute('user_list');
+        }
+
+
+        return $this->render('list/edit.html.twig', array(
+          'list' => $list,
+          'form' => $form->createView()
+        ));
     }
 
     /**
