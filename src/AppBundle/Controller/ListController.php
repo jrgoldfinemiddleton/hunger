@@ -11,13 +11,15 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-class ListController extends Controller
+class ListController extends DefaultController
 {
     /**
      * @Route("/list", name="user_list")
      */
     public function userListAction()
     {
+        $this->verifyLoggedIn();
+
         $lists = $this->getDoctrine()
             ->getRepository('AppBundle:UserList')
             ->findAll();
@@ -32,6 +34,8 @@ class ListController extends Controller
      */
     public function userCreateAction(Request $request)
     {
+        $this->verifyLoggedIn();
+
         // Create a new UserList Donation Item var
         $list = new UserList;
 
@@ -114,6 +118,8 @@ class ListController extends Controller
      */
     public function userEditAction($id, Request $request)
     {
+        $this->verifyLoggedIn();
+
         return $this->render('list/edit.html.twig');
     }
 
@@ -122,6 +128,8 @@ class ListController extends Controller
      */
     public function userDetailsAction($id)
     {
+        $this->verifyLoggedIn();
+
         return $this->render('list/details.html.twig');
     }
 
@@ -130,8 +138,11 @@ class ListController extends Controller
      */
     public function bankListAction()
     {
+        $this->verifyLoggedIn();
+        $this->verifyFoodBankUser();
+
         $lists = $this->getDoctrine()
-            ->getRepository('AppBundle:UserList')
+            ->getRepository('AppBundle:FoodBankList')
             ->findAll();
 
         return $this->render('list/index.html.twig', array(
@@ -144,6 +155,9 @@ class ListController extends Controller
      */
     public function bankCreateAction(Request $request)
     {
+        $this->verifyLoggedIn();
+        $this->verifyFoodBankUser();
+
         return $this->render('list/create.html.twig');
     }
 
@@ -152,6 +166,9 @@ class ListController extends Controller
      */
     public function bankEditAction($id, Request $request)
     {
+        $this->verifyLoggedIn();
+        $this->verifyFoodBankUser();
+
         return $this->render('list/edit.html.twig');
     }
 
@@ -160,6 +177,27 @@ class ListController extends Controller
      */
     public function bankDetailsAction($id)
     {
+        $this->verifyLoggedIn();
+        $this->verifyFoodBankUser();
+
         return $this->render('list/details.html.twig');
+    }
+
+    /**
+     * Displays the request lists of all FoodBank accounts.
+     *
+     * @Route("/banks/requested", name="bank_requests")
+     */
+    public function bankRequestListAction()
+    {
+        $this->verifyLoggedIn();
+
+        $lists = $this->getDoctrine()
+            ->getRepository('AppBundle:FoodBankList')
+            ->findAll();
+
+        return $this->render('list/index.html.twig', array(
+            'lists' => $lists
+        ));
     }
 }

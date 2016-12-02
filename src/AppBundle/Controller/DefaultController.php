@@ -18,4 +18,23 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ]);
     }
+
+    /**
+     * Blocks Users not affiliated with a FoodBank from accessing a route.
+     */
+    protected function verifyFoodBankUser()
+    {
+        $this->denyAccessUnlessGranted('ROLE_BANK_USER', null,
+            'Sorry, this page is only accessible to food bank representatives.');
+    }
+
+    /**
+     * Blocks access to a route if the User is not logged in.
+     */
+    protected function verifyLoggedIn()
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw $this->createAccessDeniedException();
+        }
+    }
 }
