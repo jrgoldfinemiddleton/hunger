@@ -11,6 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+/*
+The ListController class Handles the routing for Donation List
+items found at http://.../list
+Class handles the creation and edit of List items made for Donation Wish List
+Templating Lesson: Brad Traversy https://www.youtube.com/watch?v=HchMW8EhWPU
+*/
 class ListController extends DefaultController
 {
     /**
@@ -122,7 +129,7 @@ class ListController extends DefaultController
 
         // Get chosen UserList Donation Item var
         $list = $this->getDoctrine()
-            ->getRepository('AppBundle:List')
+            ->getRepository('AppBundle:UserList')
             ->find($id);
 
         // Set the values that will be stored in the new UserList Donation Item var
@@ -166,7 +173,7 @@ class ListController extends DefaultController
 
           // Set $list to persist in table
           $em = $this->getDoctrine()->getManager();
-          $list = $em->getRepository('AppBundle:List')->find($id);
+          $list = $em->getRepository('AppBundle:UserList')->find($id);
 
           // Set the values that will be stored in the new UserList Donation Item var
           $list->setFoodItem($foodItem);
