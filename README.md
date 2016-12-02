@@ -216,3 +216,9 @@ Any fixtures (pre-defined table rows) can be loaded according to the instruction
 Added the need of registration to access the web app. Please use fake credentials to register and then login with those fake credentials!
 
 Log out at the upper right.
+
+Unit Testing
+------------
+For this project, we have used [PHPUnit](https://phpunit.de/manual/4.8/en/index.html) to write our unit tests.  Composer installs the binary to `vendor/bin/phpunit`.  You will run this command, generally with arguments, to execute your unit tests.  Please read the documentation and especially note the various[assertions](https://phpunit.de/manual/4.8/en/appendixes.assertions.html) you can use.
+
+To create mock objects for testing, we use [Mockery](http://docs.mockery.io/en/latest/).
