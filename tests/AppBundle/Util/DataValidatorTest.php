@@ -67,17 +67,73 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(DataValidator::isValidZip($zips[7]));
     }
 
-    public function testUserListItemNotOwnedByUserIsBlocked()
+    public function testUserListItemOwnedByUserIsOK()
     {
-
         $mockUser = \Mockery::mock('\AppBundle\Entity\User');
-
         $mockUser->shouldReceive(array('getFoodBank' => null,));
 
         $mockList = \Mockery::mock('\AppBundle\Entity\UserList');
-
         $mockList->shouldReceive(array('getUser' => $mockUser));
 
         $this->assertTrue(DataValidator::validateUserAndUserListMatch($mockUser, $mockList));
+    }
+
+    public function testUserListItemNotOwnedByUserIsBad()
+    {
+        $mockUser = \Mockery::mock('\AppBundle\Entity\User');
+        $mockUser->shouldReceive(array('getFoodBank' => null,));
+
+        $mockUser2 = \Mockery::mock('\AppBundle\Entity\User');
+
+        $mockList = \Mockery::mock('\AppBundle\Entity\UserList');
+        $mockList->shouldReceive(array('getUser' => $mockUser2));
+
+        $this->assertFalse(DataValidator::validateUserAndUserListMatch($mockUser, $mockList));
+    }
+
+    public function testVoterDeniesDonorUserWithFoodBank()
+    {
+        $mockList = \Mockery::mock('\AppBundle\Entity\UserList');
+        $mockList2 = \Mockery::mock('\AppBundle\Entity\UserList');
+
+        $mockUser = \Mockery::mock('\AppBundle\Entity\User');
+        $mockUser->shouldReceive(array('getFoodBank' => $mockList2,));
+
+        $this->assertFalse(DataValidator::validateUserAndUserListMatch($mockUser, $mockList));
+    }
+
+    public function testFoodBankListItemOwnedByUserIsOK()
+    {
+        $mockBank = \Mockery::mock('\AppBundle\Entity\FoodBank');
+
+        $mockUser = \Mockery::mock('\AppBundle\Entity\User');
+        $mockUser->shouldReceive(array('getFoodBank' => $mockBank,));
+
+        $mockList = \Mockery::mock('\AppBundle\Entity\UserList');
+        $mockList->shouldReceive(array('getFoodBank' => $mockBank));
+
+        $this->assertTrue(DataValidator::validateFoodBankUserAndListMatch($mockUser, $mockList));
+    }
+
+    public function testFoodBankListItemNotOwnedByUserIsBad()
+    {
+        $mockBank = \Mockery::mock('\AppBundle\Entity\FoodBank');
+        $mockBank2 = \Mockery::mock('\AppBundle\Entity\FoodBank');
+
+        $mockUser = \Mockery::mock('\AppBundle\Entity\User');
+        $mockUser->shouldReceive(array('getFoodBank' => $mockBank,));
+
+        $mockList = \Mockery::mock('\AppBundle\Entity\UserList');
+        $mockList->shouldReceive(array('getFoodBank' => $mockBank2));
+
+        $this->assertFalse(DataValidator::validateFoodBankUserAndListMatch($mockUser, $mockList));
+    }
+
+    public function testVoterDeniesFoodBankUserWithoutFoodBank()
+    {
+        $mockUser = \Mockery::mock('\AppBundle\Entity\User');
+        $mockUser->shouldReceive(array('getFoodBank' => null,));
+
+        $this->assertFalse(DataValidator::validateFoodBankUserAndListMatch($mockUser, null));
     }
 }
