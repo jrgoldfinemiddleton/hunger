@@ -43,6 +43,23 @@ class UserList
     private $quantity;
 
     /**
+     * UserList constructor.
+     * @param $id
+     * @param $user
+     * @param $food_item
+     * @param $unit
+     * @param $quantity
+     */
+    public function __construct($id = null, $user =  null, $food_item = null, $unit = null, $quantity = null)
+    {
+        $this->id = $id;
+        $this->user = $user;
+        $this->food_item = $food_item;
+        $this->unit = $unit;
+        $this->quantity = $quantity;
+    }
+
+    /**
      * Get id
      *
      * @return integer

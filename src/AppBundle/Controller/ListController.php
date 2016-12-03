@@ -54,7 +54,7 @@ class ListController extends DefaultController
         // Make an associative Array of Food item names and Ids to populate a popdown menu
         $repositoryFoodItems = $this->getDoctrine()->getRepository('AppBundle:FoodItem');
         $foodItems = $repositoryFoodItems->findAll();
-        $foodItemsNameAndId;
+        $foodItemsNameAndId = [];
         foreach ($foodItems as $element) {
             $foodItemsNameAndId[$element->getName()] = $element;
         }

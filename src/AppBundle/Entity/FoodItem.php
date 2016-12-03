@@ -25,6 +25,17 @@ class FoodItem
     private $name;
 
     /**
+     * FoodItem constructor.
+     * @param $id
+     * @param $name
+     */
+    public function __construct($id = null, $name = null)
+    {
+        $this->id = $id;
+        $this->name = $name;
+    }
+
+    /**
      * Get id
      *
      * @return integer

@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FoodBank
 {
+
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -58,6 +60,31 @@ class FoodBank
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
+
+    /**
+     * FoodBank constructor.
+     * @param $id
+     * @param $name
+     * @param $address1
+     * @param $address2
+     * @param $city
+     * @param $state
+     * @param $zip_code
+     * @param $created_at
+     * @param $updated_at
+     */
+    public function __construct($id = null, $name = null, $address1 = null, $address2 = null, $city = null, $state = null, $zip_code = null, $created_at = null, $updated_at = null)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->address1 = $address1;
+        $this->address2 = $address2;
+        $this->city = $city;
+        $this->state = $state;
+        $this->zip_code = $zip_code;
+        $this->created_at = $created_at;
+        $this->updated_at = $updated_at;
+    }
 
     /**
      * Get id
@@ -174,7 +201,16 @@ class FoodBank
      */
     public function setState($state)
     {
-        $this->state = $state;
+        if (in_array($state, [
+            "AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "FM", "GA", "GU", "HI",
+            "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MH", "MI", "MN", "MO", "MP",
+            "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR",
+            "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"]
+        )) {
+            $this->state = $state;
+        } else {
+            throw new \InvalidArgumentException();
+        }
 
         return $this;
     }

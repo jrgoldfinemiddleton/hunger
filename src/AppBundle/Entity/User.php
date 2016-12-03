@@ -50,7 +50,28 @@ class User implements UserInterface, \Serializable
      * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\FoodBank")
      * @ORM\JoinColumn(name="food_bank_id", referencedColumnName="id")
      */
-    private $food_bank;  // for food bank reps, otherwise null
+    private $food_bank;
+
+    /**
+     * User constructor.
+     * @param $id
+     * @param $email
+     * @param $name
+     * @param $role
+     * @param $plainPassword
+     * @param $password
+     * @param $food_bank
+     */
+    public function __construct($id = null, $email = null, $name = null, $role = null, $plainPassword = null, $password = null, $food_bank = null)
+    {
+        $this->id = $id;
+        $this->email = $email;
+        $this->name = $name;
+        $this->role = $role;
+        $this->plainPassword = $plainPassword;
+        $this->password = $password;
+        $this->food_bank = $food_bank;
+    }  // for food bank reps, otherwise null
 
 
     public function eraseCredentials()

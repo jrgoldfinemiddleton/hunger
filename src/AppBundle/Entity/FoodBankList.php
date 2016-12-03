@@ -42,6 +42,23 @@ class FoodBankList
      */
     private $quantity;
 
+    /**
+     * FoodBankList constructor.
+     * @param $id
+     * @param $food_bank
+     * @param $food_item
+     * @param $unit
+     * @param $quantity
+     */
+    public function __construct($id = null, $food_bank = null, $food_item = null, $unit = null, $quantity = null)
+    {
+        $this->id = $id;
+        $this->food_bank = $food_bank;
+        $this->food_item = $food_item;
+        $this->unit = $unit;
+        $this->quantity = $quantity;
+    }
+
 
     /**
      * Get id
