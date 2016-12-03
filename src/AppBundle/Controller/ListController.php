@@ -30,9 +30,12 @@ class ListController extends DefaultController
         $lists = $this->getDoctrine()
             ->getRepository('AppBundle:UserList')
             ->findAll();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        //$user->getId();
 
         return $this->render('list/index.html.twig', array(
-            'lists' => $lists
+            'lists' => $lists,
+            'user' => $user
         ));
     }
 
@@ -81,12 +84,8 @@ class ListController extends DefaultController
 
           // Set the values that will be stored in the new UserList Donation Item var
           $list->setFoodItem($foodItem);
-          //$list->setQuantity($quantity);
-          //$list->setUnit($unit);
-
-          $user = $this->container->get('security.token_storage')->getToken()->getUser();
-          //$user->getId();
-          $list->setUnit($user->getName());
+          $list->setQuantity($quantity);
+          $list->setUnit($unit);
 
           // Set $list to persist in table
           $em = $this->getDoctrine()->getManager();
