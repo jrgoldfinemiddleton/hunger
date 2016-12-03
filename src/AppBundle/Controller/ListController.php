@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\FoodBankList;
 use AppBundle\Entity\UserList;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,7 +49,7 @@ class ListController extends DefaultController
         $this->verifyDonorUser();
 
         // Create a new UserList Donation Item var
-        $list = new UserList;
+        $list = new UserList();
 
         // Make an associative Array of Food item names and Ids to populate a popdown menu
         $repositoryFoodItems = $this->getDoctrine()->getRepository('AppBundle:FoodItem');
@@ -61,17 +62,17 @@ class ListController extends DefaultController
         // Make an associative Array of Unit names and Ids to populate a popdown menu
         $repositoryUnitItems = $this->getDoctrine()->getRepository('AppBundle:Unit');
         $unitItems = $repositoryUnitItems->findAll();
-        $unitItemsNameAndId;
+        $unitItemsNameAndId = [];
         foreach ($unitItems as $element) {
             $unitItemsNameAndId[$element->getName()] = $element;
         }
 
         // Create a new form of fields stored in $form var
         $form = $this->createFormBuilder($list)
-            ->add('foodItem', ChoiceType::class, array('choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('foodItem', ChoiceType::class, array('label' => 'Food Item', 'choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-            ->add('create', SubmitType::class, array('label' => 'Update Donation Item', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
+            ->add('create', SubmitType::class, array('label' => 'Add to Offer List', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
             ->getForm();
 
         $form->handleRequest($request);
@@ -136,17 +137,17 @@ class ListController extends DefaultController
         // Make an associative Array of Unit names and Ids to populate a popdown menu
         $repositoryUnitItems = $this->getDoctrine()->getRepository('AppBundle:Unit');
         $unitItems = $repositoryUnitItems->findAll();
-        $unitItemsNameAndId;
+        $unitItemsNameAndId = [];
         foreach ($unitItems as $element) {
             $unitItemsNameAndId[$element->getName()] = $element;
         }
 
         // Create a new form of fields stored in $form var
         $form = $this->createFormBuilder($list)
-            ->add('foodItem', ChoiceType::class, array('choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('foodItem', ChoiceType::class, array('label' => 'Food Item', 'choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-            ->add('create', SubmitType::class, array('label' => 'Create Donation Item', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
+            ->add('create', SubmitType::class, array('label' => 'Update Offer List', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
             ->getForm();
 
         $form->handleRequest($request);
@@ -238,42 +239,199 @@ class ListController extends DefaultController
             ->findAll();
 
         return $this->render('list/fb_index.html.twig', array(
-            'lists' => $lists
+            'lists' => $lists,
+            'bank' => '/bank',
         ));
     }
 
     /**
-     * @Route("/bank/list/fb_create", name="bank_create")
+     * @Route("/bank/list/create", name="bank_create")
      */
     public function bankCreateAction(Request $request)
     {
         $this->verifyLoggedIn();
         $this->verifyFoodBankUser();
 
-        return $this->render('list/fb_create.html.twig');
+        // Create a new FoodBankList request item var
+        $list = new FoodBankList();
+
+        // Make an associative Array of Food item names and Ids to populate a popdown menu
+        $repositoryFoodItems = $this->getDoctrine()->getRepository('AppBundle:FoodItem');
+        $foodItems = $repositoryFoodItems->findAll();
+        $foodItemsNameAndId = [];
+        foreach ($foodItems as $element) {
+            $foodItemsNameAndId[$element->getName()] = $element;
+        }
+
+        // Make an associative Array of Unit names and Ids to populate a popdown menu
+        $repositoryUnitItems = $this->getDoctrine()->getRepository('AppBundle:Unit');
+        $unitItems = $repositoryUnitItems->findAll();
+        $unitItemsNameAndId = [];
+        foreach ($unitItems as $element) {
+            $unitItemsNameAndId[$element->getName()] = $element;
+        }
+
+        // Create a new form of fields stored in $form var
+        $form = $this->createFormBuilder($list)
+            ->add('foodItem', ChoiceType::class, array('label' => 'Food Item', 'choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('create', SubmitType::class, array('label' => 'Add to Request List', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            //Store the data user typed or selected in the form fields in vars
+            $foodItem = $form['foodItem']->getData();
+            $quantity = $form['quantity']->getData();
+            $unit = $form['unit']->getData();
+
+            // Set the values that will be stored in the new UserList Donation Item var
+            $list->setFoodItem($foodItem);
+            $list->setQuantity($quantity);
+            $list->setUnit($unit);
+
+
+            $user = $this->container->get('security.token_storage')->getToken()->getUser();
+            $list->setFoodBank($user->getFoodBank());
+
+            // Set $list to persist in table
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($list);
+            $em->flush();
+
+            return $this->redirectToRoute('bank_list');
+        }
+
+        return $this->render('list/fb_create.html.twig', array(
+            'form' => $form->createView(),
+            'bank' => '/bank',
+        ));
     }
 
     /**
-     * @Route("/bank/list/fb_edit/{id}", name="bank_edit")
+     * @Route("/bank/list/edit/{id}", name="bank_edit")
      */
     public function bankEditAction($id, Request $request)
     {
         $this->verifyLoggedIn();
         $this->verifyFoodBankUser();
 
-        return $this->render('list/fb_edit.html.twig');
+        // Get chosen UserList Donation Item var
+        $list = $this->getDoctrine()
+            ->getRepository('AppBundle:FoodBankList')
+            ->find($id);
+
+        $this->denyAccessUnlessGranted('edit', $list);
+
+        // Set the values that will be stored in the new UserList Donation Item var
+        $list->setFoodItem($list->getFoodItem());
+        $list->setQuantity($list->getQuantity());
+        $list->setUnit($list->getUnit());
+
+        // Make an associative Array of Food item names and Ids to populate a popdown menu
+        $repositoryFoodItems = $this->getDoctrine()->getRepository('AppBundle:FoodItem');
+        $foodItems = $repositoryFoodItems->findAll();
+        $foodItemsNameAndId = [];
+        foreach ($foodItems as $element) {
+            $foodItemsNameAndId[$element->getName()] = $element;
+        }
+
+        // Make an associative Array of Unit names and Ids to populate a popdown menu
+        $repositoryUnitItems = $this->getDoctrine()->getRepository('AppBundle:Unit');
+        $unitItems = $repositoryUnitItems->findAll();
+        $unitItemsNameAndId = [];
+        foreach ($unitItems as $element) {
+            $unitItemsNameAndId[$element->getName()] = $element;
+        }
+
+        // Create a new form of fields stored in $form var
+        $form = $this->createFormBuilder($list)
+            ->add('foodItem', ChoiceType::class, array('label' => 'Food Item', 'choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('create', SubmitType::class, array('label' => 'Update Request List', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            //Store the data user typed or selected in the form fields in vars
+            $foodItem = $form['foodItem']->getData();
+            $quantity = $form['quantity']->getData();
+            $unit = $form['unit']->getData();
+
+
+            // Set $list to persist in table
+            $em = $this->getDoctrine()->getManager();
+            $list = $em->getRepository('AppBundle:FoodBankList')->find($id);
+
+            // Set the values that will be stored in the new UserList Donation Item var
+            $list->setFoodItem($foodItem);
+            $list->setQuantity($quantity);
+            $list->setUnit($unit);
+
+
+
+            $em->flush();
+
+            // $this->addFlash(
+            //   'Donation Item Created'
+            // );
+            return $this->redirectToRoute('bank_list');
+        }
+
+
+        return $this->render('list/fb_edit.html.twig', array(
+            'list' => $list,
+            'form' => $form->createView(),
+            'bank' => '/bank',
+        ));
     }
 
     /**
-     * @Route("/bank/list/fb_details/{id}", name="bank_details")
+     * @Route("/bank/list/details/{id}", name="bank_details")
      */
     public function bankDetailsAction($id)
     {
         $this->verifyLoggedIn();
         $this->verifyFoodBankUser();
 
+        // Get chosen UserList Donation Item var
+        $list = $this->getDoctrine()
+            ->getRepository('AppBundle:FoodBankList')
+            ->find($id);
+
+        $this->denyAccessUnlessGranted('edit', $list);
+
         return $this->render('list/fb_details.html.twig');
     }
+
+    /**
+     * @Route("bank/list/delete/{id}", name="bank_delete")
+     */
+    public function bankDeleteAction($id)
+    {
+        $this->verifyLoggedIn();
+        $this->verifyFoodBankUser();
+
+        // Set $list to persist in table
+        $em = $this->getDoctrine()->getManager();
+        $list = $em->getRepository('AppBundle:FoodBankList')->find($id);
+
+        $this->denyAccessUnlessGranted('edit', $list);
+
+        //Delete the item
+        $em->remove($list);
+        $em->flush();
+
+        //Return to the updated user_list page
+        return $this->redirectToRoute('bank_list');
+    }
+
 
     /**
      * Displays the request lists of all FoodBank accounts.
@@ -309,5 +467,15 @@ class ListController extends DefaultController
         } else {
             return $this->redirectToRoute('user_list');
         }
+    }
+
+    /**
+     * @Route("/general_user", name="user_dashboard")
+     */
+    public function userDashboardAction(Request $request)
+    {
+        $this->verifyLoggedIn();
+
+        return $this->render('general_user/dashboard.html.twig');
     }
 }
