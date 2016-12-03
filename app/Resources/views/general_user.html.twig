@@ -21,7 +21,7 @@
 
     </head>
     <body>
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-default navbar-static-top">
           <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -36,6 +36,8 @@
               <ul class="nav navbar-nav">
                 <li><a href="/general_user">Home</a></li>
                 <li><a href="/which_list">My List</a></li>
+                <li><a href="{% if bank is defined %} {{bank}}{% endif %}/list/create">Add List Item</a></li>
+                <li><a href="/logout">Log Out</a></li>
                 <!-- <li><a href="/foodbanksloc">Nearby Food Banks</a> -->
               </ul>
             </div><!--/.nav-collapse -->

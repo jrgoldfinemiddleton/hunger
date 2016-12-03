@@ -460,6 +460,7 @@ class ListController extends DefaultController
     public function selectListAction()
     {
         $this->verifyLoggedIn();
+
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
         if ($user->getFoodBank() !== null) {
@@ -476,6 +477,14 @@ class ListController extends DefaultController
     {
         $this->verifyLoggedIn();
 
-        return $this->render('general_user/dashboard.html.twig');
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if ($user->getFoodBank() !== null) {
+            return $this->render('general_user/dashboard.html.twig', array(
+                'bank' => '/bank',
+            ));
+        } else {
+            return $this->render('general_user/dashboard.html.twig');
+        }
     }
 }
