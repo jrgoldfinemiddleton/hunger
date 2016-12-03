@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Entity
  * @UniqueEntity(fields="email", message="This email address is already in use")
  */
-class User implements UserInterface, AdvancedUserInterface, \Serializable
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id;
