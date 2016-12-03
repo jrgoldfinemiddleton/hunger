@@ -12,6 +12,7 @@ namespace AppBundle\Security\Voter;
 use AppBundle\Entity\FoodBankList;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserList;
+use AppBundle\Util\DataValidator;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -26,14 +27,12 @@ class AccessVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // make sure the attribute is supported
-        if (!in_array($attribute, array(self::VIEW, self::EDIT))) {
+        if (!DataValidator::isValidUserPermission($attribute))
             return false;
-        }
 
         // this Voter handles the food lists
-        if (!$subject instanceof UserList && !$subject instanceof FoodBankList) {
+        if (!DataValidator::isListType($subject))
             return false;
-        }
 
         return true;
     }
@@ -45,31 +44,16 @@ class AccessVoter extends Voter
     {
         $user = $token->getUser();
 
+        // user must be logged in, or no access
         if (!$user instanceof User) {
-            // user must be logged in, or no access
             return false;
         }
+
 
         if ($subject instanceof UserList) {
-            if ($user->getFoodBank() !== null) {
-                return false;
-            }
-
-            if ($subject->getUser() !== $user) {
-                return false;
-            }
-        } elseif ($subject instanceof FoodBankList) {
-            if ($user->getFoodBank() === null) {
-                return false;
-            }
-
-            if ($subject->getFoodBank() !== $user->getFoodBank()) {
-                return false;
-            }
-        } else { // $subject is not a list, absolutely unacceptable
-            return false;
+            return (DataValidator::validateUserAndUserListMatch($user, $subject));
+        } else {
+            return (DataValidator::validateFoodBankUserAndListMatch($user, $subject));
         }
-
-        return true;
     }
 }

@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /*
 The ListController class Handles the routing for Donation List
-items found at http://.../list
+items found at http://.../list and http://.../bank/list
 Class handles the creation and edit of List items made for Donation Wish List
 Templating Lesson: Brad Traversy https://www.youtube.com/watch?v=HchMW8EhWPU
 */
