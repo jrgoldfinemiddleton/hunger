@@ -26,16 +26,16 @@ class ListController extends DefaultController
     public function userListAction()
     {
         $this->verifyLoggedIn();
+        $this->verifyDonorUser();
 
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
         $lists = $this->getDoctrine()
             ->getRepository('AppBundle:UserList')
-            ->findAll();
-        $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        //$user->getId();
+            ->findAllByUser($user);
 
         return $this->render('list/index.html.twig', array(
             'lists' => $lists,
-            'user' => $user
+            'user' => $user,
         ));
     }
 
@@ -45,6 +45,7 @@ class ListController extends DefaultController
     public function userCreateAction(Request $request)
     {
         $this->verifyLoggedIn();
+        $this->verifyDonorUser();
 
         // Create a new UserList Donation Item var
         $list = new UserList;
@@ -54,7 +55,7 @@ class ListController extends DefaultController
         $foodItems = $repositoryFoodItems->findAll();
         $foodItemsNameAndId;
         foreach ($foodItems as $element) {
-          $foodItemsNameAndId[$element->getName()] = $element;
+            $foodItemsNameAndId[$element->getName()] = $element;
         }
 
         // Make an associative Array of Unit names and Ids to populate a popdown menu
@@ -62,7 +63,7 @@ class ListController extends DefaultController
         $unitItems = $repositoryUnitItems->findAll();
         $unitItemsNameAndId;
         foreach ($unitItems as $element) {
-          $unitItemsNameAndId[$element->getName()] = $element;
+            $unitItemsNameAndId[$element->getName()] = $element;
         }
 
         // Create a new form of fields stored in $form var
@@ -77,26 +78,30 @@ class ListController extends DefaultController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-          //Store the data user typed or selected in the form fields in vars
-          $foodItem = $form['foodItem']->getData();
-          $quantity = $form['quantity']->getData();
-          $unit = $form['unit']->getData();
+            //Store the data user typed or selected in the form fields in vars
+            $foodItem = $form['foodItem']->getData();
+            $quantity = $form['quantity']->getData();
+            $unit = $form['unit']->getData();
 
-          // Set the values that will be stored in the new UserList Donation Item var
-          $list->setFoodItem($foodItem);
-          $list->setQuantity($quantity);
-          $list->setUnit($unit);
+            // Set the values that will be stored in the new UserList Donation Item var
+            $list->setFoodItem($foodItem);
+            $list->setQuantity($quantity);
+            $list->setUnit($unit);
 
-          // Set $list to persist in table
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($list);
-          $em->flush();
 
-          return $this->redirectToRoute('user_list');
+            $user = $this->container->get('security.token_storage')->getToken()->getUser();
+            $list->setUser($user);
+
+            // Set $list to persist in table
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($list);
+            $em->flush();
+
+            return $this->redirectToRoute('user_list');
         }
 
         return $this->render('list/create.html.twig', array(
-          'form' => $form->createView()
+            'form' => $form->createView()
         ));
     }
 
@@ -106,11 +111,14 @@ class ListController extends DefaultController
     public function userEditAction($id, Request $request)
     {
         $this->verifyLoggedIn();
+        $this->verifyDonorUser();
 
         // Get chosen UserList Donation Item var
         $list = $this->getDoctrine()
             ->getRepository('AppBundle:UserList')
             ->find($id);
+
+        $this->denyAccessUnlessGranted('edit', $list);
 
         // Set the values that will be stored in the new UserList Donation Item var
         $list->setFoodItem($list->getFoodItem());
@@ -120,9 +128,9 @@ class ListController extends DefaultController
         // Make an associative Array of Food item names and Ids to populate a popdown menu
         $repositoryFoodItems = $this->getDoctrine()->getRepository('AppBundle:FoodItem');
         $foodItems = $repositoryFoodItems->findAll();
-        $foodItemsNameAndId;
+        $foodItemsNameAndId = [];
         foreach ($foodItems as $element) {
-          $foodItemsNameAndId[$element->getName()] = $element;
+            $foodItemsNameAndId[$element->getName()] = $element;
         }
 
         // Make an associative Array of Unit names and Ids to populate a popdown menu
@@ -130,7 +138,7 @@ class ListController extends DefaultController
         $unitItems = $repositoryUnitItems->findAll();
         $unitItemsNameAndId;
         foreach ($unitItems as $element) {
-          $unitItemsNameAndId[$element->getName()] = $element;
+            $unitItemsNameAndId[$element->getName()] = $element;
         }
 
         // Create a new form of fields stored in $form var
@@ -145,35 +153,35 @@ class ListController extends DefaultController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-          //Store the data user typed or selected in the form fields in vars
-          $foodItem = $form['foodItem']->getData();
-          $quantity = $form['quantity']->getData();
-          $unit = $form['unit']->getData();
+            //Store the data user typed or selected in the form fields in vars
+            $foodItem = $form['foodItem']->getData();
+            $quantity = $form['quantity']->getData();
+            $unit = $form['unit']->getData();
 
 
-          // Set $list to persist in table
-          $em = $this->getDoctrine()->getManager();
-          $list = $em->getRepository('AppBundle:UserList')->find($id);
+            // Set $list to persist in table
+            $em = $this->getDoctrine()->getManager();
+            $list = $em->getRepository('AppBundle:UserList')->find($id);
 
-          // Set the values that will be stored in the new UserList Donation Item var
-          $list->setFoodItem($foodItem);
-          $list->setQuantity($quantity);
-          $list->setUnit($unit);
+            // Set the values that will be stored in the new UserList Donation Item var
+            $list->setFoodItem($foodItem);
+            $list->setQuantity($quantity);
+            $list->setUnit($unit);
 
 
 
-          $em->flush();
+            $em->flush();
 
-          // $this->addFlash(
-          //   'Donation Item Created'
-          // );
-          return $this->redirectToRoute('user_list');
+            // $this->addFlash(
+            //   'Donation Item Created'
+            // );
+            return $this->redirectToRoute('user_list');
         }
 
 
         return $this->render('list/edit.html.twig', array(
-          'list' => $list,
-          'form' => $form->createView()
+            'list' => $list,
+            'form' => $form->createView()
         ));
     }
 
@@ -183,6 +191,14 @@ class ListController extends DefaultController
     public function userDetailsAction($id)
     {
         $this->verifyLoggedIn();
+        $this->verifyDonorUser();
+
+        // Get chosen UserList Donation Item var
+        $list = $this->getDoctrine()
+            ->getRepository('AppBundle:UserList')
+            ->find($id);
+
+        $this->denyAccessUnlessGranted('edit', $list);
 
         return $this->render('list/details.html.twig');
     }
@@ -193,10 +209,13 @@ class ListController extends DefaultController
     public function userDeleteAction($id)
     {
         $this->verifyLoggedIn();
+        $this->verifyDonorUser();
 
         // Set $list to persist in table
         $em = $this->getDoctrine()->getManager();
         $list = $em->getRepository('AppBundle:UserList')->find($id);
+
+        $this->denyAccessUnlessGranted('edit', $list);
 
         //Delete the item
         $em->remove($list);

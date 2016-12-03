@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
+
 /**
  * UserListRepository
  *
@@ -10,4 +12,12 @@ namespace AppBundle\Repository;
  */
 class UserListRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllByUser(User $user)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT li FROM AppBundle:UserList li WHERE li.user = :user'
+            )->setParameter('user', $user)
+            ->getResult();
+    }
 }

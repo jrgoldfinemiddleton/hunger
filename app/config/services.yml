@@ -7,3 +7,8 @@ services:
     app.form_login_authenticator:
         class: AppBundle\Security\FormLoginAuthenticator
         arguments: ["@router", "@security.password_encoder"]
+    app.access_voter:
+        class: AppBundle\Security\Voter\AccessVoter
+        tags:
+            - { name: security.voter }
+        public: false

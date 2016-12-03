@@ -29,6 +29,15 @@ class DefaultController extends Controller
     }
 
     /**
+     * Blocks Users affiliated with a FoodBank from accessing a route.
+     */
+    protected function verifyDonorUser()
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null,
+            'Sorry, this page is only accessible to donors.');
+    }
+
+    /**
      * Blocks access to a route if the User is not logged in.
      */
     protected function verifyLoggedIn()
