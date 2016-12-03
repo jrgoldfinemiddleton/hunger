@@ -231,7 +231,7 @@ class ListController extends DefaultController
         $this->verifyLoggedIn();
         $this->verifyFoodBankUser();
 
-        return $this->render('list/create.html.twig');
+        return $this->render('list/fb_create.html.twig');
     }
 
     /**
@@ -242,7 +242,7 @@ class ListController extends DefaultController
         $this->verifyLoggedIn();
         $this->verifyFoodBankUser();
 
-        return $this->render('list/edit.html.twig');
+        return $this->render('list/fb_edit.html.twig');
     }
 
     /**
@@ -253,7 +253,7 @@ class ListController extends DefaultController
         $this->verifyLoggedIn();
         $this->verifyFoodBankUser();
 
-        return $this->render('list/details.html.twig');
+        return $this->render('list/fb_details.html.twig');
     }
 
     /**
@@ -269,7 +269,7 @@ class ListController extends DefaultController
             ->getRepository('AppBundle:FoodBankList')
             ->findAll();
 
-        return $this->render('list/index.html.twig', array(
+        return $this->render('list/fb_index.html.twig', array(
             'lists' => $lists
         ));
     }
