@@ -3,6 +3,8 @@
 namespace AppBundle\Util;
 
 
+use Mockery\Mock;
+
 class DataValidatorTest extends \PHPUnit_Framework_TestCase
 {
     public function testOnlyValidStateAbbreviationsAllowed()
@@ -65,4 +67,17 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(DataValidator::isValidZip($zips[7]));
     }
 
+    public function testUserListItemNotOwnedByUserIsBlocked()
+    {
+
+        $mockUser = \Mockery::mock('\AppBundle\Entity\User');
+
+        $mockUser->shouldReceive(array('getFoodBank' => null,));
+
+        $mockList = \Mockery::mock('\AppBundle\Entity\UserList');
+
+        $mockList->shouldReceive(array('getUser' => $mockUser));
+
+        $this->assertTrue(DataValidator::validateUserAndUserListMatch($mockUser, $mockList));
+    }
 }
