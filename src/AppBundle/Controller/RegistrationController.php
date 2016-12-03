@@ -45,7 +45,7 @@ class RegistrationController extends DefaultController
             $em->persist($user);
             $em->flush();
 
-            //return $this->redirectToRoute('login');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('auth/register.html.twig', [

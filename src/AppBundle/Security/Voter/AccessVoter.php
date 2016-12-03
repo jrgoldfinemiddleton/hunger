@@ -63,9 +63,11 @@ class AccessVoter extends Voter
                 return false;
             }
 
-            if ($subject->getUser() !== $user) {
+            if ($subject->getFoodBank() !== $user->getFoodBank()) {
                 return false;
             }
+        } else { // $subject is not a list, absolutely unacceptable
+            return false;
         }
 
         return true;

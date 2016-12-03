@@ -284,6 +284,7 @@ class ListController extends DefaultController
     {
         $this->verifyLoggedIn();
 
+        // TODO: group by Food Bank in display, even separate lists for each Food Bank
         $lists = $this->getDoctrine()
             ->getRepository('AppBundle:FoodBankList')
             ->findAll();
@@ -291,5 +292,22 @@ class ListController extends DefaultController
         return $this->render('list/fb_index.html.twig', array(
             'lists' => $lists
         ));
+    }
+
+    /**
+     * Redirects the user to the correct main list page for his/her account type.
+     *
+     * @Route("/which_list", name="select_list")
+     */
+    public function selectListAction()
+    {
+        $this->verifyLoggedIn();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if ($user->getFoodBank() !== null) {
+            return $this->redirectToRoute('bank_list');
+        } else {
+            return $this->redirectToRoute('user_list');
+        }
     }
 }
