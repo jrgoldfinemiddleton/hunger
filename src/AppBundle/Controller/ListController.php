@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 /*
 The ListController class Handles the routing for Donation List
 items found at http://.../list and http://.../bank/list
@@ -70,7 +70,7 @@ class ListController extends DefaultController
         // Create a new form of fields stored in $form var
         $form = $this->createFormBuilder($list)
             ->add('foodItem', ChoiceType::class, array('label' => 'Food Item', 'choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-            ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('quantity', NumberType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('create', SubmitType::class, array('label' => 'Add to Offer List', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
             ->getForm();
@@ -145,7 +145,7 @@ class ListController extends DefaultController
         // Create a new form of fields stored in $form var
         $form = $this->createFormBuilder($list)
             ->add('foodItem', ChoiceType::class, array('label' => 'Food Item', 'choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-            ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('quantity', NumberType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('create', SubmitType::class, array('label' => 'Update Offer List', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
             ->getForm();
@@ -274,7 +274,7 @@ class ListController extends DefaultController
         // Create a new form of fields stored in $form var
         $form = $this->createFormBuilder($list)
             ->add('foodItem', ChoiceType::class, array('label' => 'Food Item', 'choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-            ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('quantity', NumberType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('create', SubmitType::class, array('label' => 'Add to Request List', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
             ->getForm();
@@ -350,7 +350,7 @@ class ListController extends DefaultController
         // Create a new form of fields stored in $form var
         $form = $this->createFormBuilder($list)
             ->add('foodItem', ChoiceType::class, array('label' => 'Food Item', 'choices' => $foodItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
-            ->add('quantity', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
+            ->add('quantity', NumberType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('unit', ChoiceType::class, array('choices' => $unitItemsNameAndId, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:12px')))
             ->add('create', SubmitType::class, array('label' => 'Update Request List', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:12px')))
             ->getForm();
