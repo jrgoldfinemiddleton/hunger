@@ -123,18 +123,6 @@ class User implements UserInterface, \Serializable
         $this->plainPassword = $plainPassword;
     }
 
-    /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
-
-    public function __construct()
-    {
-        $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
-    }
-
     public function getSalt()
     {
         return null;
@@ -164,31 +152,8 @@ class User implements UserInterface, \Serializable
         return $this->food_bank;
     }
 
-
-    // Implement AdvancedUserInterface, \Serializable
-
-    public function isAccountNonExpired()
-       {
-           return true;
-       }
-
-       public function isAccountNonLocked()
-       {
-           return true;
-       }
-
-       public function isCredentialsNonExpired()
-       {
-           return true;
-       }
-
-       public function isEnabled()
-       {
-           return $this->isActive;
-       }
-
        /** @see \Serializable::serialize() */
-       public function serialize()
+        public function serialize()
        {
            return serialize(array(
                $this->id,

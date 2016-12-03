@@ -31,7 +31,7 @@ class RegistrationController extends DefaultController
             $password = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-            if ($user->getFoodBank()) {
+            if ($user->getFoodBank() != null) {
                 // User is a food bank rep
                 $user->setRole('ROLE_BANK_USER');
 
@@ -45,7 +45,7 @@ class RegistrationController extends DefaultController
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('login');
+            //return $this->redirectToRoute('login');
         }
 
         return $this->render('auth/register.html.twig', [

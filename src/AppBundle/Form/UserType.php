@@ -29,6 +29,9 @@ class UserType extends AbstractType
                         ->orderBy('u.name', 'ASC');
                 },
                 'choice_label' => 'name',
+                'placeholder' => 'None',
+                'required' => false,
+                'label' => 'Select food bank you represent (optional):'
             ))
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
