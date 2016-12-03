@@ -218,13 +218,13 @@ class ListController extends DefaultController
             ->getRepository('AppBundle:FoodBankList')
             ->findAll();
 
-        return $this->render('list/index.html.twig', array(
+        return $this->render('list/fb_index.html.twig', array(
             'lists' => $lists
         ));
     }
 
     /**
-     * @Route("/bank/list/create", name="bank_create")
+     * @Route("/bank/list/fb_create", name="bank_create")
      */
     public function bankCreateAction(Request $request)
     {
@@ -235,7 +235,7 @@ class ListController extends DefaultController
     }
 
     /**
-     * @Route("/bank/list/edit/{id}", name="bank_edit")
+     * @Route("/bank/list/fb_edit/{id}", name="bank_edit")
      */
     public function bankEditAction($id, Request $request)
     {
@@ -246,7 +246,7 @@ class ListController extends DefaultController
     }
 
     /**
-     * @Route("/bank/list/details/{id}", name="bank_details")
+     * @Route("/bank/list/fb_details/{id}", name="bank_details")
      */
     public function bankDetailsAction($id)
     {
