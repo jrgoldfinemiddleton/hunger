@@ -14,9 +14,10 @@
 		</tr>
 	</thead>
 	<tbody>
+		{% set inc = 1 %}
 		{% for list in lists %}
 		<tr>
-			<th scope="row">{{list.id}}</th>
+			<th scope="row">{{inc}}</th>
 			<td>{{list.foodItem.name}}</td>
 			<td>{{list.quantity}}</td>
 			<td>{{list.unit.name}}</td>
@@ -25,6 +26,7 @@
 				<a href="/list/delete/{{list.id}}" class="btn btn-danger">Delete</a>
 			</td>
 		</tr>
+		{% set inc = inc + 1 %}
 		{% endfor %}
 	</tbody>
 </table>
