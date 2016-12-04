@@ -37,7 +37,11 @@ class User implements UserInterface, \Serializable
     protected $role;
 
     /**
-     * @Assert\Length(max=4096)
+     * @Assert\Length(min=8, max=4096)
+     * @Assert\Regex(
+     *     pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/",
+     *     message="Your password must contain an uppercase letter, a lowercase letter, and a number."
+     *     )
      */
     protected $plainPassword;
 

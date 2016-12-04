@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * FoodBankList
@@ -39,6 +40,10 @@ class FoodBankList
 
     /**
      * @ORM\Column(name="quantity", type="integer")
+     * @Assert\Range(
+     *     min = 1,
+     *     minMessage = "You must choose a number greater than or equal to {{ limit }}."
+     * )
      */
     private $quantity;
 
