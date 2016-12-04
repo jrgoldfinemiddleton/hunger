@@ -212,11 +212,6 @@ The first command will show you the SQL commands that will be run with the `--fo
 
 Any fixtures (pre-defined table rows) can be loaded using the `php bin/console doctrine:fixtures:load` command.  Note that you will want to use the `--append` flag if you want to preserve the data currently in your tables.
 
----------------------------------
-Added the need of registration to access the web app. Please use fake credentials to register and then login with those fake credentials!
-
-Log out at the upper right.
-
 Unit Testing
 ------------
 For this project, we have used [PHPUnit](https://phpunit.de/manual/4.8/en/index.html) to write our unit tests.  Composer installs the binary to `vendor/bin/phpunit`.  You will run this command, generally with arguments, to execute your unit tests.  Please read the documentation and especially note the various [assertions](https://phpunit.de/manual/4.8/en/appendixes.assertions.html) you can use.
