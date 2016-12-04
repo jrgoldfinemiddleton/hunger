@@ -4,12 +4,13 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Unit;
 
 
-class LoadUnitData implements FixtureInterface
+class LoadUnitData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -40,5 +41,10 @@ class LoadUnitData implements FixtureInterface
         }
 
         $manager->flush();
+    }
+
+    public function getOrder()
+    {
+        return 3;
     }
 }

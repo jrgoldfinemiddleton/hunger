@@ -67,6 +67,20 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(DataValidator::isValidZip($zips[7]));
     }
 
+    public function testRemoveTabsAndNewLines()
+    {
+        $badStrings = [
+            "\t" => 0,
+            '' => 0,
+            "\n\r" => 0,
+            "a\ndfsdg" => 6,
+        ];
+
+        foreach ($badStrings as $key => $val) {
+            $this->assertEquals(strlen(DataValidator::stripTabsAndNewLines($key)), $val);
+        }
+    }
+
     public function testUserListItemOwnedByUserIsOK()
     {
         $mockUser = \Mockery::mock('\AppBundle\Entity\User');
